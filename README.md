@@ -10,5 +10,5 @@ git cms-merge-topic cms-egamma:EGM_gain_v1\
 cd EgammaAnalysis/ElectronTools/data\
 git clone https://github.com/ECALELFS/ScalesSmearings.git \
 cd $CMSSW_BASE/src\
-git clone git@github.com:Ror5ch/NtupleMaker.git .\
+git clone https://github.com/Ror5ch/NtupleMaker.git .\
 scram b -j 4
