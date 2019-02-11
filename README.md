@@ -10,8 +10,8 @@ git cms-merge-topic cms-egamma:EGM_gain_v1\
 cd EgammaAnalysis/ElectronTools/data\
 git clone https://github.com/ECALELFS/ScalesSmearings.git \
 cd $CMSSW_BASE/src\
-mkdir Physics
-cd Physics
+mkdir Physics\
+cd Physics\
 git clone https://github.com/Ror5ch/NtupleMaker.git .\
-cd ..
+cd ..\
 scram b -j 4
