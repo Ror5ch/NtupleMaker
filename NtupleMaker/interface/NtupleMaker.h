@@ -182,33 +182,33 @@ private:
     edm::EDGetTokenT<std::vector<pat::Muon>> muons_token_;  
 
     edm::EDGetTokenT<edm::View<pat::Electron>> electrons_token_;
-    edm::EDGetTokenT<edm::View<pat::Electron>> calibrated_electrons_token_;
+    // edm::EDGetTokenT<edm::View<pat::Electron>> calibrated_electrons_token_;
     edm::EDGetTokenT<std::vector<reco::Conversion>> conversions_token_;
 
     edm::EDGetTokenT<edm::View<pat::Photon>> photons_token_;
-    edm::EDGetTokenT<edm::View<pat::Photon>> calibrated_photons_token_;
+    // edm::EDGetTokenT<edm::View<pat::Photon>> calibrated_photons_token_;
 
     edm::EDGetTokenT<double> rho_token_;
     edm::EDGetTokenT<double> rho_for_miniiso_token_;
 
-    edm::EDGetTokenT<edm::ValueMap<bool>> pho_cutbased_loose_id_token_;
-    edm::EDGetTokenT<edm::ValueMap<bool>> pho_cutbased_medium_id_token_;
-    edm::EDGetTokenT<edm::ValueMap<bool>> pho_cutbased_tight_id_token_;
-    edm::EDGetTokenT<edm::ValueMap<vid::CutFlowResult>> pho_cutbased_loose_id_results_token_;
-    edm::EDGetTokenT<edm::ValueMap<vid::CutFlowResult>> pho_cutbased_medium_id_results_token_;
-    edm::EDGetTokenT<edm::ValueMap<vid::CutFlowResult>> pho_cutbased_tight_id_results_token_;
+    std::string pho_cutbased_loose_id_name_;
+    std::string pho_cutbased_medium_id_name_;
+    std::string pho_cutbased_tight_id_name_;
+    std::string pho_cutbased_loose_id_results_name_;
+    std::string pho_cutbased_medium_id_results_name_;
+    std::string pho_cutbased_tight_id_results_name_;
 
-    edm::EDGetTokenT<edm::ValueMap<bool>> pho_mva_wp90_id_token_;
-    edm::EDGetTokenT<edm::ValueMap<bool>> pho_mva_wp80_id_token_;
+    std::string pho_mva_wp90_id_name_;
+    std::string pho_mva_wp80_id_name_;
 
-    edm::EDGetTokenT<edm::ValueMap<float>> pho_mva_value_token_;
-    edm::EDGetTokenT<edm::ValueMap<int>> pho_mva_category_token_;
+    std::string pho_mva_value_name_;
+    std::string pho_mva_category_name_;
 
-    edm::EDGetTokenT<edm::ValueMap<float>> full5x5sigmaietaietamap_token_;
+    std::string full5x5sigmaietaietamap_name_;
 
-    edm::EDGetTokenT<edm::ValueMap<float>> pho_chiso_token_;
-    edm::EDGetTokenT<edm::ValueMap<float>> pho_nhiso_token_;
-    edm::EDGetTokenT<edm::ValueMap<float>> pho_phiso_token_;
+    std::string pho_chiso_name_;
+    std::string pho_nhiso_name_;
+    std::string pho_phiso_name_;
 
     edm::FileInPath ea_file_path_;
     edm::FileInPath ea_for_ch_file_;
@@ -223,16 +223,16 @@ private:
     edm::EDGetTokenT<GenEventInfoProduct> generator_token_;
     edm::EDGetTokenT<LHEEventProduct> lhe_token_;
 
-    edm::EDGetTokenT<edm::ValueMap<bool>> el_cutbased_veto_id_token_;
-    edm::EDGetTokenT<edm::ValueMap<bool>> el_cutbased_loose_id_token_;
-    edm::EDGetTokenT<edm::ValueMap<bool>> el_cutbased_medium_id_token_;
-    edm::EDGetTokenT<edm::ValueMap<bool>> el_cutbased_tight_id_token_;
-    edm::EDGetTokenT<edm::ValueMap<bool>> el_cutbased_heep_id_token_;
-    edm::EDGetTokenT<edm::ValueMap<bool>> el_mva_wp90_id_token_;
-    edm::EDGetTokenT<edm::ValueMap<bool>> el_mva_wp80_id_token_;
+    std::string el_cutbased_veto_id_name_;
+    std::string el_cutbased_loose_id_name_;
+    std::string el_cutbased_medium_id_name_;
+    std::string el_cutbased_tight_id_name_;
+    std::string el_cutbased_heep_id_name_;
+    std::string el_mva_wp90_id_name_;
+    std::string el_mva_wp80_id_name_;
 
-    edm::EDGetTokenT<edm::ValueMap<float>> el_mva_value_token_;
-    edm::EDGetTokenT<edm::ValueMap<int>> el_mva_category_token_;
+    std::string el_mva_value_name_;
+    std::string el_mva_category_name_;
 
     ESHandle<MagneticField> B;
     edm::ESHandle<TransientTrackBuilder> theTTBuilder;    

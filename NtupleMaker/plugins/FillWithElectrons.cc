@@ -3,37 +3,11 @@
 void NtupleMaker::FillWithElectrons(const edm::Event& iEvent)
 {
     edm::Handle<edm::View<pat::Electron>> electrons;
-    edm::Handle<edm::View<pat::Electron>> calibratedElectrons;
     iEvent.getByToken(electrons_token_, electrons);
-    if (egm_corrected_)
-    {
-        iEvent.getByToken(calibrated_electrons_token_, calibratedElectrons);
-        assert(electrons->size() == calibratedElectrons->size());
-    }
 
     event_.num_electrons = electrons->size();
     if (electrons->size() == 0) return;
     
-    edm::Handle<edm::ValueMap<bool>> veto_id_decisions;
-    edm::Handle<edm::ValueMap<bool>> loose_id_decisions;
-    edm::Handle<edm::ValueMap<bool>> medium_id_decisions;
-    edm::Handle<edm::ValueMap<bool>> tight_id_decisions; 
-    edm::Handle<edm::ValueMap<bool>> heep_id_decisions; 
-    iEvent.getByToken(el_cutbased_veto_id_token_, veto_id_decisions);
-    iEvent.getByToken(el_cutbased_loose_id_token_, loose_id_decisions);
-    iEvent.getByToken(el_cutbased_medium_id_token_, medium_id_decisions);
-    iEvent.getByToken(el_cutbased_tight_id_token_, tight_id_decisions);
-    iEvent.getByToken(el_cutbased_heep_id_token_, heep_id_decisions);
-
-    edm::Handle<edm::ValueMap<float> > mvaValues;
-    edm::Handle<edm::ValueMap<int> > mvaCategories;
-    edm::Handle<edm::ValueMap<bool> > wp90_id_decisions;
-    edm::Handle<edm::ValueMap<bool> > wp80_id_decisions;
-    iEvent.getByToken(el_mva_value_token_,mvaValues);
-    iEvent.getByToken(el_mva_category_token_,mvaCategories);
-    iEvent.getByToken(el_mva_wp90_id_token_, wp90_id_decisions);
-    iEvent.getByToken(el_mva_wp80_id_token_, wp80_id_decisions);
-
     edm::Handle<pat::PackedCandidateCollection> pfcands;
     edm::Handle<double> rho_for_pfiso;
     edm::Handle<double> rho_for_miniiso;
@@ -79,23 +53,22 @@ void NtupleMaker::FillWithElectrons(const edm::Event& iEvent)
 
         if (egm_corrected_)
         {
-            const auto calibrated_electron = calibratedElectrons->ptrAt(idx);
-            event_.electron_corrected_pt[idx] = calibrated_electron->pt();
+            event_.electron_corrected_pt[idx] = electron->pt() * electron->userFloat("ecalTrkEnergyPostCorr") / electron->energy();;
         }
         else
         {
             event_.electron_corrected_pt[idx] = electron->pt();
         }
         
-        event_.electron_pass_cutbased_veto[idx] = (*veto_id_decisions)[electron];
-        event_.electron_pass_cutbased_loose[idx] = (*loose_id_decisions)[electron];
-        event_.electron_pass_cutbased_medium[idx] = (*medium_id_decisions)[electron];
-        event_.electron_pass_cutbased_tight[idx] = (*tight_id_decisions)[electron];
-        if (heep_id_decisions.isValid()) event_.electron_pass_cutbased_heep[idx] = (*heep_id_decisions)[electron];
-        event_.electron_mva_value[idx] = (*mvaValues)[electron];
-        event_.electron_mva_category[idx] = (*mvaCategories)[electron];
-        event_.electron_pass_mva_wp90[idx] = (*wp90_id_decisions)[electron];
-        event_.electron_pass_mva_wp80[idx] = (*wp80_id_decisions)[electron];
+        event_.electron_pass_cutbased_veto[idx] = electron->electronID(el_cutbased_veto_id_name_);
+        event_.electron_pass_cutbased_loose[idx] = electron->electronID(el_cutbased_loose_id_name_);
+        event_.electron_pass_cutbased_medium[idx] = electron->electronID(el_cutbased_medium_id_name_);
+        event_.electron_pass_cutbased_tight[idx] = electron->electronID(el_cutbased_tight_id_name_);
+        event_.electron_pass_cutbased_heep[idx] = electron->electronID(el_cutbased_heep_id_name_);
+        event_.electron_mva_value[idx] = electron->userFloat(el_mva_value_name_);
+        event_.electron_mva_category[idx] = electron->userInt(el_mva_category_name_);
+        event_.electron_pass_mva_wp90[idx] = electron->electronID(el_mva_wp90_id_name_);
+        event_.electron_pass_mva_wp80[idx] = electron->electronID(el_mva_wp80_id_name_);
 
         event_.electron_sc_eta[idx] = electron->superCluster()->eta();
         event_.electron_sc_phi[idx] = electron->superCluster()->phi();
@@ -160,7 +133,7 @@ void NtupleMaker::FillWithElectrons(const edm::Event& iEvent)
         event_.electron_dr04tkSumPt[idx] = oldIso04.tkSumPt;
 
         event_.electron_d0[idx] = (-1) * electron->gsfTrack()->dxy(vtx.position());
-        event_.electron_expectedMissingInnerHits[idx] = electron->gsfTrack()->hitPattern().numberOfHits(reco::HitPattern::MISSING_INNER_HITS);
+        event_.electron_expectedMissingInnerHits[idx] = electron->gsfTrack()->hitPattern().numberOfAllHits(reco::HitPattern::MISSING_INNER_HITS);
         event_.electron_passConversionVeto[idx] = !ConversionTools::hasMatchedConversion(*electron, conversions, beamSpotHandle->position());
 
         event_.electron_miniiso_ea[idx] = GetMiniIsolation(pfcands, dynamic_cast<const reco::Candidate *>(&(electrons->at(idx))), 0.05, 0.2, 10., *rho_for_miniiso, true);

@@ -3,36 +3,7 @@
 void NtupleMaker::FillWithPhotons(const edm::Event& iEvent)
 {
     edm::Handle<edm::View<pat::Photon>> photons;
-    edm::Handle<edm::View<pat::Photon>> calibratedPhotons;
     iEvent.getByToken(photons_token_, photons);
-    if (egm_corrected_)
-    {
-        iEvent.getByToken(calibrated_photons_token_, calibratedPhotons);
-        assert(photons->size() == calibratedPhotons->size());
-    }
-
-    edm::Handle<edm::ValueMap<bool> > loose_id_decisions;
-    edm::Handle<edm::ValueMap<bool> > medium_id_decisions;
-    edm::Handle<edm::ValueMap<bool> > tight_id_decisions;
-    iEvent.getByToken(pho_cutbased_loose_id_token_, loose_id_decisions);
-    iEvent.getByToken(pho_cutbased_medium_id_token_, medium_id_decisions);
-    iEvent.getByToken(pho_cutbased_tight_id_token_, tight_id_decisions);
-
-    edm::Handle<edm::ValueMap<float> > mvaValues;
-    edm::Handle<edm::ValueMap<int> > mvaCategories;
-    edm::Handle<edm::ValueMap<bool> > wp90_id_decisions;
-    edm::Handle<edm::ValueMap<bool> > wp80_id_decisions;
-    iEvent.getByToken(pho_mva_value_token_, mvaValues);
-    iEvent.getByToken(pho_mva_category_token_, mvaCategories);
-    iEvent.getByToken(pho_mva_wp90_id_token_, wp90_id_decisions);
-    iEvent.getByToken(pho_mva_wp80_id_token_, wp80_id_decisions);
-
-    edm::Handle<edm::ValueMap<float> > phoChargedIsolationMap;
-    edm::Handle<edm::ValueMap<float> > phoNeutralHadronIsolationMap;
-    edm::Handle<edm::ValueMap<float> > phoPhotonIsolationMap;
-    iEvent.getByToken(pho_chiso_token_, phoChargedIsolationMap);
-    iEvent.getByToken(pho_nhiso_token_, phoNeutralHadronIsolationMap);
-    iEvent.getByToken(pho_phiso_token_, phoPhotonIsolationMap);
 
     edm::Handle<EcalRecHitCollection> ecalCalibHitEB_;
     iEvent.getByToken(ecalCalibHitEBToken_, ecalCalibHitEB_);
@@ -70,26 +41,25 @@ void NtupleMaker::FillWithPhotons(const edm::Event& iEvent)
 
         if (egm_corrected_) 
         {
-            const auto calibrated_photon = calibratedPhotons->ptrAt(i);
-            event_.photon_corrected_pt[i] = calibrated_photon->pt();
+            event_.photon_corrected_pt[i] = photon->pt() * photon->userFloat("ecalEnergyPostCorr") / photon->energy();;
         }
         else 
         {
             event_.photon_corrected_pt[i] = photon->pt();
         }
 
-        event_.photon_ChIsoEa[i] = (double)(*phoChargedIsolationMap)[photon];
-        event_.photon_NhIsoEa[i] = (double)(*phoNeutralHadronIsolationMap)[photon];
-        event_.photon_PhIsoEa[i] = (double)(*phoPhotonIsolationMap)[photon];
+        event_.photon_ChIsoEa[i] = photon->userFloat(pho_chiso_name_);
+        event_.photon_NhIsoEa[i] = photon->userFloat(pho_nhiso_name_);
+        event_.photon_PhIsoEa[i] = photon->userFloat(pho_phiso_name_);
 
-        event_.photon_mva_value[i] = (*mvaValues)[photon];
-        event_.photon_mva_category[i] = (*mvaCategories)[photon];
+        event_.photon_mva_value[i] = photon->userFloat(pho_mva_value_name_);
+        event_.photon_mva_category[i] = photon->userInt(pho_mva_category_name_);
 
-        event_.photon_pass_cutbased_loose[i] = (*loose_id_decisions)[photon];
-        event_.photon_pass_cutbased_medium[i] = (*medium_id_decisions)[photon];
-        event_.photon_pass_cutbased_tight[i] = (*tight_id_decisions)[photon];
-        event_.photon_pass_mva_wp90[i] = (*wp90_id_decisions)[photon];
-        event_.photon_pass_mva_wp80[i] = (*wp80_id_decisions)[photon];
+        event_.photon_pass_cutbased_loose[i] = photon->photonID(pho_cutbased_loose_id_name_);
+        event_.photon_pass_cutbased_medium[i] = photon->photonID(pho_cutbased_medium_id_name_);
+        event_.photon_pass_cutbased_tight[i] = photon->photonID(pho_cutbased_tight_id_name_);
+        event_.photon_pass_mva_wp90[i] = photon->photonID(pho_mva_wp90_id_name_);
+        event_.photon_pass_mva_wp80[i] = photon->photonID(pho_mva_wp80_id_name_);
 
         // event_.photon_HoverE                = photon->hadTowOverEm();
         event_.photon_HoverE[i] = photon->hadronicOverEm();
