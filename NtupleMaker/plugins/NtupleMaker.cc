@@ -79,7 +79,7 @@ NtupleMaker::NtupleMaker(const edm::ParameterSet& iConfig):
     // filters_token_                 {consumes<edm::TriggerResults>                       (edm::InputTag("TriggerResults","","RECO")) },
     filters_token_                 {consumes<edm::TriggerResults>                       (iConfig.getParameter<edm::InputTag>("Filters"))},
     trigger_list_                  {iConfig.getUntrackedParameter<std::vector<std::string>>("trigger_list")},
-    ecalCalibHitEBToken_           {consumes<EcalRecHitCollection>                      (edm::InputTag( "reducedEgamma", "reducedEBRecHits", "PAT" ))}
+    ecalCalibHitEBToken_           {consumes<EcalRecHitCollection>                      (edm::InputTag( "reducedEgamma", "reducedEBRecHits", "DQM" ))}
     {}
 
 void NtupleMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup) 
