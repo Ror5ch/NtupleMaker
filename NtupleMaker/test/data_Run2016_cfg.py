@@ -34,6 +34,7 @@ process.TFileService = cms.Service("TFileService",
 process.load("Physics.NtupleMaker.NtupleMaker_94X_MINIAOD_cfi")
 process.tree.egm_corrected = cms.untracked.bool(True)
 process.tree.run_on_mc = isMC
+process.tree.reducedEBRecHits = cms.InputTag("reducedEgamma", "reducedEBRecHits", "DQM")
 
 process.p = cms.Path(
     process.tree
