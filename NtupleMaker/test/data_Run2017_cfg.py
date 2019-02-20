@@ -17,7 +17,7 @@ process.source = cms.Source("PoolSource",
     fileNames = cms.untracked.vstring('/store/data/Run2017B/SinglePhoton/MINIAOD/31Mar2018-v1/90000/3AF2EAE7-BB37-E811-A5AA-0CC47A4C8EB6.root')
 )
 
-process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(-1))
+process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(100))
 
 ## Geometry and Detector Conditions (needed for a few patTuple production steps)
 process.load("Configuration.Geometry.GeometryRecoDB_cff")
@@ -34,6 +34,11 @@ process.load("Physics.NtupleMaker.NtupleMaker_94X_MINIAOD_cfi")
 process.tree.egm_corrected = cms.untracked.bool(True)
 process.tree.run_on_mc = isMC
 
+# Fix on a bug in the ECAL-Tracker momentum combination
+from RecoEgamma.EgammaTools.EgammaPostRecoTools import setupEgammaPostRecoSeq
+setupEgammaPostRecoSeq(process, runVID=True, era='2017-Nov17ReReco')
+
 process.p = cms.Path(
+    process.egammaPostRecoSeq *
     process.tree
 )
