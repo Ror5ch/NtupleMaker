@@ -40,12 +40,10 @@ NtupleMaker::NtupleMaker(const edm::ParameterSet& iConfig):
     vertices_token_                {consumes<std::vector<reco::Vertex>>                 (iConfig.getParameter<edm::InputTag>("Vertex"))},
     pileup_token_                  {consumes<std::vector<PileupSummaryInfo>>            (iConfig.getParameter<edm::InputTag>("PU"))},
     pfcandidates_token_            {consumes<std::vector<pat::PackedCandidate>>         (iConfig.getParameter<edm::InputTag>("PFCandidates"))},
-    muons_token_           {consumes<std::vector<pat::Muon>>                    (iConfig.getParameter<edm::InputTag>("Muons"))},
-    electrons_token_       {consumes<edm::View<pat::Electron>>                  (iConfig.getParameter<edm::InputTag>("Electrons"))},
-    // calibrated_electrons_token_    {consumes<edm::View<pat::Electron>>                  (iConfig.getParameter<edm::InputTag>("CalibratedElectrons"))},
+    muons_token_                   {consumes<std::vector<pat::Muon>>                    (iConfig.getParameter<edm::InputTag>("Muons"))},
+    electrons_token_               {consumes<edm::View<pat::Electron>>                  (iConfig.getParameter<edm::InputTag>("Electrons"))},
     conversions_token_             {consumes<std::vector<reco::Conversion>>             (iConfig.getParameter<edm::InputTag>("Conversions"))},
     photons_token_                 {consumes<edm::View<pat::Photon>>                    (iConfig.getParameter<edm::InputTag>("Photons"))},
-    // calibrated_photons_token_      {consumes<edm::View<pat::Photon>>                    (iConfig.getParameter<edm::InputTag>("CalibratedPhotons"))},
     rho_token_                     {consumes<double>                                    (iConfig.getParameter<edm::InputTag>("rho"))},
     rho_for_miniiso_token_         {consumes<double>                                    (iConfig.getParameter<edm::InputTag>("miniRho"))},
     pho_cutbased_loose_id_name_    {iConfig.getUntrackedParameter<std::string>("phoLooseIdName")},
@@ -76,10 +74,9 @@ NtupleMaker::NtupleMaker(const edm::ParameterSet& iConfig):
     el_mva_wp80_id_name_           {iConfig.getUntrackedParameter<std::string>("eleMvaWp80IdName")},
     el_mva_value_name_             {iConfig.getUntrackedParameter<std::string>("eleMvaValuesName")},
     el_mva_category_name_          {iConfig.getUntrackedParameter<std::string>("eleMvaCategoriesName")},
-    // filters_token_                 {consumes<edm::TriggerResults>                       (edm::InputTag("TriggerResults","","RECO")) },
     filters_token_                 {consumes<edm::TriggerResults>                       (iConfig.getParameter<edm::InputTag>("Filters"))},
     trigger_list_                  {iConfig.getUntrackedParameter<std::vector<std::string>>("trigger_list")},
-    ecalCalibHitEBToken_           {consumes<EcalRecHitCollection>                      (edm::InputTag( "reducedEgamma", "reducedEBRecHits", "DQM" ))}
+    ecalCalibHitEBToken_           {consumes<EcalRecHitCollection>                      (iConfig.getParameter<edm::InputTag>("reducedEBRecHits"))}
     {}
 
 void NtupleMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup) 

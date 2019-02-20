@@ -46,6 +46,9 @@ tree = cms.EDAnalyzer("NtupleMaker",
     rho               = cms.InputTag("fixedGridRhoFastjetAll"),
     miniRho           = cms.InputTag("fixedGridRhoFastjetCentralNeutral"),
 
+    ## EBRecHits (for systematics related to the gain switch issue in 2016)
+    reducedEBRecHits = cms.InputTag("reducedEgamma", "reducedEBRecHits", "PAT"),
+
     ## JetMET tags
     Jets = cms.InputTag("slimmedJets"),
     MET  = cms.InputTag("slimmedMETs"),
