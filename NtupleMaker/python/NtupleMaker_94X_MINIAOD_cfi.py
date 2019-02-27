@@ -29,7 +29,7 @@ tree = cms.EDAnalyzer("NtupleMaker",
     trigger_list   = cms.untracked.vstring(
         "HLT_Mu50_v", "HLT_TkMu50_v", "HLT_IsoMu24_v", "HLT_IsoTkMu24_v", 
         "HLT_DoublePhoton60_v", "HLT_Photon165_HE10_v", "HLT_Photon175_v",
-        "HLT_Ele27_WPTight_Gsf_v", "HLT_DoubleEle33_CaloIdL_GsfTrkIdVL_v", "HLT_DoubleEle33_CaloIdL_MW_v"
+        "HLT_Ele27_WPTight_Gsf_v", "HLT_DoubleEle33_CaloIdL_GsfTrkIdVL_v", "HLT_DoubleEle33_CaloIdL_MW_v", "HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v"
     ),
 
     ## Muon tags
