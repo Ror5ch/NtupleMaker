@@ -15,7 +15,7 @@ RecoCTPPS/ProtonReconstruction \\\
 RecoCTPPS/TotemRPLocal \\\
 SimCTPPS/OpticsParameterisation \\\
 Validation/CTPPS \\\
-CondFormats/RunInfo \\\ 
+CondFormats/RunInfo \\\
 CondFormats/DataRecord\
 git clone https://github.com/Ror5ch/NtupleMaker.git Physics -b 94X_PPS\
 scram b -j 4
