@@ -223,7 +223,7 @@ void EventBuffer::Initialize()
         jet_MUF[i] = -999;
 
         proton_xi[i] = -999;
-        proton_mehtod[i] = -999;
+        proton_method[i] = -999;
         proton_lhcSector[i] = -999;
         proton_isValid[i] = false;
 

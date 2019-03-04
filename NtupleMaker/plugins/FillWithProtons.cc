@@ -1,14 +1,14 @@
 #include "Physics/NtupleMaker/interface/NtupleMaker.h"
 
-void FillWithProtons(const edm::Event&)
+void NtupleMaker::FillWithProtons(const edm::Event& iEvent)
 {
     edm::Handle<std::vector<reco::ProtonTrack>> protons;
-    event.getByToken(protons_token_, protons);
+    iEvent.getByToken(protons_token_, protons);
 
     event_.num_protons = protons->size();
 
     auto index = 0;
-    for (const auto& proton : protons)
+    for (const auto& proton : *protons)
     {
         event_.proton_xi[index] = proton.xi();
         event_.proton_method[index] = proton.method;
