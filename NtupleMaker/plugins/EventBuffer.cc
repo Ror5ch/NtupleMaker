@@ -475,6 +475,7 @@ void EventBuffer::SetBranchWrite(TTree* tree)
     tree->Branch("proton_isValid", proton_isValid, "proton_isValid[num_protons]/O");
 
     tree->Branch("num_local_tracks", &num_local_tracks);
+    tree->Branch("local_track_rpId", local_track_rpId, "local_track_rpId[num_local_tracks]/I");
     tree->Branch("local_track_x", local_track_x, "local_track_x[num_local_tracks]/D");
     tree->Branch("local_track_x_unc", local_track_x_unc, "local_track_x_unc[num_local_tracks]/D");
     tree->Branch("local_track_y", local_track_y, "local_track_y[num_local_tracks]/D");
@@ -721,6 +722,7 @@ void EventBuffer::SetBranchRead(TChain* tree)
     tree->SetBranchAddress("proton_isValid", proton_isValid);
 
     tree->SetBranchAddress("num_local_tracks", &num_local_tracks);
+    tree->SetBranchAddress("local_track_rpId", local_track_rpId);
     tree->SetBranchAddress("local_track_x", local_track_x);
     tree->SetBranchAddress("local_track_x_unc", local_track_x_unc);
     tree->SetBranchAddress("local_track_y", local_track_y);
