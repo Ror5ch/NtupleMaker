@@ -12,6 +12,7 @@ tree = cms.EDAnalyzer("NtupleMaker",
     need_dileptons        = cms.untracked.bool(False),
     need_photons          = cms.untracked.bool(True),
     need_jets             = cms.untracked.bool(False),
+    need_protons          = cms.untracked.bool(True),
     need_met              = cms.untracked.bool(False),
     need_genparticles     = cms.untracked.bool(False),
     need_pdf_weights      = cms.untracked.bool(False),
@@ -56,6 +57,10 @@ tree = cms.EDAnalyzer("NtupleMaker",
     ## GEN tags
     GenParticles = cms.InputTag("prunedGenParticles"),
     Generator    = cms.InputTag("generator"),
+
+    ## Proton tags
+    Protons = cms.InputTag("ctppsProtonReconstruction"),
+    LocalTracks = cms.InputTag("ctppsLocalTrackLiteProducer"),
 
     ## EGM ID
     eleVetoIdName                 = cms.untracked.string("cutBasedElectronID-Summer16-80X-V1-veto"),

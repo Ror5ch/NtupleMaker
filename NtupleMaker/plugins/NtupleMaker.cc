@@ -77,7 +77,9 @@ NtupleMaker::NtupleMaker(const edm::ParameterSet& iConfig):
     el_mva_category_name_          {iConfig.getUntrackedParameter<std::string>("eleMvaCategoriesName")},
     filters_token_                 {consumes<edm::TriggerResults>                       (iConfig.getParameter<edm::InputTag>("Filters"))},
     trigger_list_                  {iConfig.getUntrackedParameter<std::vector<std::string>>("trigger_list")},
-    ecalCalibHitEBToken_           {consumes<EcalRecHitCollection>                      (iConfig.getParameter<edm::InputTag>("reducedEBRecHits"))}
+    ecalCalibHitEBToken_           {consumes<EcalRecHitCollection>                      (iConfig.getParameter<edm::InputTag>("reducedEBRecHits"))},
+    protons_token_                 {consumes<std::vector<reco::ProtonTrack>>            (iConfig.getParameter<InputTag>("Protons"))},
+    local_tracks_token_            {consumes<std::vector<CTPPSLocalTrackLite>>          (iConfig.getParameter<edm::InputTag>("LocalTracks"))}
     {}
 
 void NtupleMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup) 

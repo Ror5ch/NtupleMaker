@@ -256,8 +256,8 @@ private:
     // GAIN
     edm::EDGetTokenT<EcalRecHitCollection> ecalCalibHitEBToken_;
 
-    edm::EDGetTokenT<std::vector<CTPPSLocalTrackLite>> local_tracks_token_;
     edm::EDGetTokenT<std::vector<reco::ProtonTrack>> protons_token_;
+    edm::EDGetTokenT<std::vector<CTPPSLocalTrackLite>> local_tracks_token_;
 };
 
 #endif
