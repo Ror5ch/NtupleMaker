@@ -5,7 +5,7 @@ cmsenv\
 git cms-init\
 git remote add ctpps git@github.com:CTPPS/cmssw.git\
 git fetch ctpps\
-git checkout -b test ctpps/ctpps_initial_proton_reconstruction_CMSSW_10_2_0\
+git checkout -b test ctpps/ctpps_initial_proton_reconstruction_CMSSW_9_4_11\
 git cms-addpkg \\\
 CondFormats/CTPPSOpticsObjects \\\
 DataFormats/ProtonReco \\\
