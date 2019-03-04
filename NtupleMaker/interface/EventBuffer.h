@@ -240,6 +240,25 @@ public:
     int jet_CHM[MAX_SIZE];
     int jet_NHM[MAX_SIZE];
     double jet_MUF[MAX_SIZE];
+
+    int num_protons;
+    double proton_xi[MAX_SIZE];
+    // double proton_xi_unc[MAX_SIZE];
+    int proton_method[MAX_SIZE];
+    int proton_lhcSector[MAX_SIZE];
+    bool proton_isValid[MAX_SIZE];
+
+    int num_local_tracks;
+    int local_track_rpId[MAX_SIZE];
+    double local_track_x[MAX_SIZE];
+    double local_track_x_unc[MAX_SIZE];
+    double local_track_y[MAX_SIZE];
+    double local_track_y_unc[MAX_SIZE];
+    double local_track_tx[MAX_SIZE];
+    double local_track_tx_unc[MAX_SIZE];
+    double local_track_ty[MAX_SIZE];
+    double local_track_ty_unc[MAX_SIZE];
+    double local_track_chiSquaredOverNDF[MAX_SIZE];
 };
 
 #endif

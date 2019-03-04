@@ -22,6 +22,8 @@ void EventBuffer::Initialize()
     num_photons = -999;
     num_gen_particles = -999;
     num_jets = -999;
+    num_protons = -999;
+    num_local_tracks = -999;
 
     filter_name->clear();
     trigger_name->clear();
@@ -219,6 +221,22 @@ void EventBuffer::Initialize()
         jet_CHM[i] = -999;
         jet_NHM[i] = -999;
         jet_MUF[i] = -999;
+
+        proton_xi[i] = -999;
+        proton_mehtod[i] = -999;
+        proton_lhcSector[i] = -999;
+        proton_isValid[i] = false;
+
+        local_track_rpId[i] = -999;
+        local_track_x[i] = -999;
+        local_track_x_unc[i] = -999;
+        local_track_y[i] = -999;
+        local_track_y_unc[i] = -999;
+        local_track_tx[i] = -999;
+        local_track_tx_unc[i] = -999;
+        local_track_ty[i] = -999;
+        local_track_ty_unc[i] = -999;
+        local_track_chiSquaredOverNDF[i] = -999;
     }
 }
 
@@ -449,6 +467,23 @@ void EventBuffer::SetBranchWrite(TTree* tree)
     // tree->Branch("jet_CHM", jet_CHM, "jet_CHM[num_jets]/I");
     // tree->Branch("jet_NHM", jet_NHM, "jet_NHM[num_jets]/I");
     // tree->Branch("jet_MUF", jet_MUF, "jet_MUF[num_jets]/D");
+
+    tree->Branch("num_protons", &num_protons);
+    tree->Branch("proton_xi", proton_xi, "proton_xi[num_protons]/D");
+    tree->Branch("proton_method", proton_method, "proton_method[num_protons]/I");
+    tree->Branch("proton_lhcSector", proton_lhcSector, "proton_lhcSector[num_protons]/I");
+    tree->Branch("proton_isValid", proton_isValid, "proton_isValid[num_protons]/O");
+
+    tree->Branch("num_local_tracks", &num_local_tracks);
+    tree->Branch("local_track_x", local_track_x, "local_track_x[num_local_tracks]/D");
+    tree->Branch("local_track_x_unc", local_track_x_unc, "local_track_x_unc[num_local_tracks]/D");
+    tree->Branch("local_track_y", local_track_y, "local_track_y[num_local_tracks]/D");
+    tree->Branch("local_track_y_unc", local_track_y_unc, "local_track_y_unc[num_local_tracks]/D");
+    tree->Branch("local_track_tx", local_track_tx, "local_track_tx[num_local_tracks]/D");
+    tree->Branch("local_track_tx_unc", local_track_tx_unc, "local_track_tx_unc[num_local_tracks]/D");
+    tree->Branch("local_track_ty", local_track_ty, "local_track_ty[num_local_tracks]/D");
+    tree->Branch("local_track_ty_unc", local_track_ty_unc, "local_track_ty_unc[num_local_tracks]/D");
+    tree->Branch("local_track_chiSquaredOverNDF", local_track_chiSquaredOverNDF, "local_track_chiSquaredOverNDF[num_local_tracks]/D");
 }
 
 void EventBuffer::SetBranchRead(TChain* tree)
@@ -678,4 +713,21 @@ void EventBuffer::SetBranchRead(TChain* tree)
     tree->SetBranchAddress("gen_particle_isPromptFinalState", gen_particle_isPromptFinalState);
     tree->SetBranchAddress("gen_particle_isDirectHardProcessTauDecayProductFinalState", gen_particle_isDirectHardProcessTauDecayProductFinalState);
     tree->SetBranchAddress("gen_particle_isDirectPromptTauDecayProductFinalState", gen_particle_isDirectPromptTauDecayProductFinalState);
+
+    tree->SetBranchAddress("num_protons", &num_protons);
+    tree->SetBranchAddress("proton_xi", proton_xi);
+    tree->SetBranchAddress("proton_method", proton_method);
+    tree->SetBranchAddress("proton_lhcSector", proton_lhcSector);
+    tree->SetBranchAddress("proton_isValid", proton_isValid);
+
+    tree->SetBranchAddress("num_local_tracks", &num_local_tracks);
+    tree->SetBranchAddress("local_track_x", local_track_x);
+    tree->SetBranchAddress("local_track_x_unc", local_track_x_unc);
+    tree->SetBranchAddress("local_track_y", local_track_y);
+    tree->SetBranchAddress("local_track_y_unc", local_track_y_unc);
+    tree->SetBranchAddress("local_track_tx", local_track_tx);
+    tree->SetBranchAddress("local_track_tx_unc", local_track_tx_unc);
+    tree->SetBranchAddress("local_track_ty", local_track_ty);
+    tree->SetBranchAddress("local_track_ty_unc", local_track_ty_unc);
+    tree->SetBranchAddress("local_track_chiSquaredOverNDF", local_track_chiSquaredOverNDF);
 }

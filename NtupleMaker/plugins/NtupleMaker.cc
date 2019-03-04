@@ -29,6 +29,7 @@ NtupleMaker::NtupleMaker(const edm::ParameterSet& iConfig):
     need_dileptons_                {iConfig.getUntrackedParameter<bool>("need_dileptons")},    
     need_photons_                  {iConfig.getUntrackedParameter<bool>("need_photons")},    
     need_jets                      {iConfig.getUntrackedParameter<bool>("need_jets")},    
+    need_protons                   {iConfig.getUntrackedParameter<bool>("need_protons")},    
     need_met_                      {iConfig.getUntrackedParameter<bool>("need_met")},    
     need_genparticles_             {iConfig.getUntrackedParameter<bool>("need_genparticles")},
     need_pdf_weights_              {iConfig.getUntrackedParameter<bool>("need_pdf_weights")},
@@ -103,6 +104,11 @@ void NtupleMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetu
     if (need_electrons_) FillWithElectrons(iEvent);
     if (need_photons_) FillWithPhotons(iEvent);
     if (need_jets) FillWithJets(iEvent);
+    if (need_protons)
+    {
+        FillWithProtons(iEvent);
+        FillWithLocalTracks(iEvent);
+    }
 
     if (run_on_mc_) 
     {

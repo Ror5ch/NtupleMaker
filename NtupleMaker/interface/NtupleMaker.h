@@ -84,6 +84,9 @@
 #include "DataFormats/PatCandidates/interface/VIDCutFlowResult.h"
 #include "DataFormats/DetId/interface/DetIdCollection.h" // REMINIAOD
 
+#include "DataFormats/ProtonReco/interface/ProtonTrack.h"
+#include "DataFormats/CTPPSReco/interface/CTPPSLocalTrackLite.h"
+
 #include <TTree.h>
 #include <TROOT.h>
 #include <TSystem.h>
@@ -148,6 +151,8 @@ private:
     void FillWithPhotons(const edm::Event&);
     void FillWithGenparticles(const edm::Event&);
     void FillWithJets(const edm::Event&);
+    void FillWithProtons(const edm::Event&);
+    void FillWithLocalTracks(const edm::Event&);
 
     double GetMiniIsolation(const edm::Handle<pat::PackedCandidateCollection>&, const reco::Candidate*, double, double, double, double, bool);
     double GetEffectiveAreaForMuon(double eta);
@@ -164,6 +169,7 @@ private:
     const bool need_dileptons_;
     const bool need_photons_;
     const bool need_jets;
+    const bool need_protons;
     const bool need_met_;
     const bool need_genparticles_;
     const bool need_pdf_weights_;
@@ -249,6 +255,9 @@ private:
 
     // GAIN
     edm::EDGetTokenT<EcalRecHitCollection> ecalCalibHitEBToken_;
+
+    edm::EDGetTokenT<std::vector<CTPPSLocalTrackLite>> local_tracks_token_;
+    edm::EDGetTokenT<std::vector<reco::ProtonTrack>> protons_token_;
 };
 
 #endif
